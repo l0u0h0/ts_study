@@ -36,3 +36,10 @@
 - config 파일에 있는 설정대로 모두 컴파일 되기 때문
 
 - `tsc -w`를 사용하면 와치모드가 되어 파일이 수정될때마다 컴파일됨.
+
+- tsc를 글로벌로 설치하지 않았을 때 실행하는 법
+  - `node_modules/.bin/tsc`
+  - `node_modules/typescript/bin/tsc`
+- 보통은 위에 cli로 실행하지만 꽤 길다.
+- 새로운 기능으로 `npx tsc`로 실행 가능하다.
+- 이렇게 하기 위해 `npx tsc --init`을 해줘서 config 파일을 생성해준다.
