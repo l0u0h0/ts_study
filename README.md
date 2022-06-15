@@ -43,3 +43,9 @@
 - 보통은 위에 cli로 실행하지만 꽤 길다.
 - 새로운 기능으로 `npx tsc`로 실행 가능하다.
 - 이렇게 하기 위해 `npx tsc --init`을 해줘서 config 파일을 생성해준다.
+- `npx tsc -w`로 와치모드 가능
+- 이 프로젝트의 어떤 스크립트가 돌아갈 수 있는지 등록 가능
+- package.json에 scripts 항목에 build에 tsc를 넣어주면
+- `npm run build`로 자동으로 tsc 실행가능
+- `npm run build:warch` 로 와치모드 가능
+- 이것도 scripts 항목에 커스터마이징 가능
