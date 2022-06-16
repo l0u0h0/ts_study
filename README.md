@@ -49,3 +49,10 @@
 - `npm run build`로 자동으로 tsc 실행가능
 - `npm run build:warch` 로 와치모드 가능
 - 이것도 scripts 항목에 커스터마이징 가능
+
+- ### VSCODE
+- Typescript Compiler
+  - VS Code에 내장 컴파일러 존재
+  - 내장 컴파일러 버전은 vscode가 업데이트 되면서 올라간다.
+    - 컴파일러 버전과 vscode의 버전은 상관 관계
+  - 내장된 컴파일러를 선택할 수 있고, 직접 설치한 컴파일러를 선택할 수도 있다.
