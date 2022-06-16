@@ -65,3 +65,12 @@
   - 타입을 지정해주는 일
   - 콜론을 뒤에 붙여 타입을 지정해준다.
   - `let a: string;`
+- func도 마찬가지로 인자로 받을 때 타입을 지정해줄 수 있다.
+
+```ts
+function hello(b: number) {
+  return b;
+}
+hello(12);
+// hello("Yuhan");
+```
