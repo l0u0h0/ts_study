@@ -283,3 +283,18 @@ let u: undefined = undefined;
 console.log(u); // undefined
 console.log(typeof u); // undefined
 ```
+
+### object
+
+```ts
+// create by object literal
+const person1 = { name: "Lee", age: 39 };
+
+// person1 is not "object" type.
+// person1 is "{name: string, age: number}" type.
+
+// create by Object.create
+const person2 = Object.create({ name: "Lee", age: 25 });
+```
+
+- `primitive type이 아닌 것`을 나타내고 싶을 때 사용하는 타입
