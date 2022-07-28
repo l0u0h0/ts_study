@@ -240,3 +240,46 @@ const obj = {
 
 obj[sym];
 ```
+
+### null & undefined
+
+- TS에서 둘은 실제로 각각 undefined 및 null 이라는 타입을 가진다.
+- void 와 마찬가지로 그 자체로는 유용하지 않다.
+- 둘 다 소문자만 존재한다.
+
+```ts
+// 이 변수들에 할당할 수 있는 것들은 거의 없다.
+let u: undefined = undefined;
+let n: null = null;
+```
+
+- 둘은 다른 모든 타입의 서브 타입으로 존재한다.
+- number에 둘 다 할당할 수 있다는 의미이다.
+- 하지만 컴파일 옵션에서 `--strictNullChecks` 사용하면, null과 undefined는 void나 자기 자신들에게만 할당할 수 있다.
+
+  - void에 null은 넣을 수 없다.
+  - 이 경우 null과 undefined 를 할당할 수 있게 하려면 union type을 이용해야 한다.
+
+- null 이라는 값으로 할당된 것을 null이라고 한다.
+- 무언가가 있는데, 사용할 준비가 덜 된 상태
+- null이라는 타입은 null이라는 값만 가질 수 있다.
+- 런타임에서 typeof 연산자를 이용해서 알아내면 object형이다.
+
+```ts
+let n: null = null;
+
+console.log(n); // null
+console.log(typeof n); // object
+```
+
+- 값을 할당하지 않은 변수는 undefined라는 값을 가진다.
+- 무안가가 아예 준비가 되지 않은 상태
+- object의 프로퍼티가 없을 때도 undefined 이다.
+- null과 다르게 런타임에서 typeof를 해보면 undefined이다.
+
+```ts
+let u: undefined = undefined;
+
+console.log(u); // undefined
+console.log(typeof u); // undefined
+```
