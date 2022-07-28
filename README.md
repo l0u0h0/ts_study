@@ -100,3 +100,48 @@ hello(12);
     - `Any`, `Void`, `Never`, `Unknown`
     - `Enum`
     - `Tuple`: object형
+
+### Primitive Type
+
+- 오브젝트와 레퍼런스 형태가 아닌 실제 값을 저장하는 자료형
+- 프리미티브 형의 내장 함수를 사용 가능한 것은 JS 처리 방식 덕분
+- ES2015기준 6가지
+
+  - `boolean`
+  - `number`
+  - `string`
+  - `symbol`(ES2015)
+  - `null`
+  - `undefined`
+
+- literal 값으로 프리미티브 타입의 서브 타입을 나타낼 수 있다.
+- 또는 래퍼 객체로 만들 수 있다.
+
+```ts
+new Boolean(false); // typeof new Boolean(false) : 'object';
+new String("world"); // typeof new String('world') : 'object';
+new Number(42); // typeof new Number(42) : 'object';
+```
+
+##### Type Casing
+
+- TS 의 핵심 프리미티브 타입은 모두 소문자이다.
+- Number, String, Boolean, Symbol 또는 Object 유형이 위에서 권장한 소문자 버전과  
+  동일하다고 생각할 수 있지만 이러한 유형은 프리미티브 언어를 나타내지 않으며  
+  타입으로 사용해서는 안된다.
+
+```ts
+function reverse(s: String): String {
+  return s.split("").reverse().join("");
+}
+reverse("hello world");
+```
+
+- 대신 number, string, boolean, object, symbol 타입을 사용해야한다.
+
+```ts
+function reverse(s: string): string {
+  return s.split("").reverse().join("");
+}
+reverse("hello world");
+```
