@@ -6,4 +6,4 @@ console.log(typeof isDone); // 'boolean'
 
 let isOK: Boolean = true;
 
-let isNotOK: boolean = new Boolean(true); // ERROR
+// let isNotOK: boolean = new Boolean(true); // ERROR

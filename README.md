@@ -159,3 +159,27 @@ let isOK: Boolean = true;
 
 let isNotOK: boolean = new Boolean(true); // ERROR
 ```
+
+### Number
+
+- JS와 같이 TS의 모든 숫자는 부동 소수점 값이다.
+- TS는 16진수 및 10진수 리터럴 외에도 ES2015에 도입된 2진수 및 8진수를 지원
+- NaN
+- 1_000_000과 같은 표기 가능
+
+```ts
+let decimal: number = 10;
+
+// 16진수
+let hex: number = 0xf00d;
+
+// 2진수
+let binary: number = 0b1010;
+
+// 8진수
+let octal: number = 0o744;
+
+let notANumber: number = NaN;
+
+let underscoreNum: number = 1_000_000;
+```
