@@ -74,3 +74,29 @@ function hello(b: number) {
 hello(12);
 // hello("Yuhan");
 ```
+
+### TS vs JS
+
+- TS - Static Types
+  - set during development
+- JS - Dynamic Types
+  - resolved at runtime
+- 타입스크립트는 개발하는 중간에 타입을 체크하고
+- 자바스크립트는 실제로 런타입에 돌입해야만 오류를 체크할 수 있다.
+- 프로그램이 유용하려면, 가장 간단한 데이터 단위로 작업할 수 있어야 한다.
+- numbers, strings, structures, boolean 등등
+- 타입스크립트에서 우리는 JS에서 기대하는 것과 동일한 타입을 지원하며,  
+  돕기 위해 추가적인 열거 타입이 제공되었다.
+- 자료형 종류
+  - 기본 자료형(JS 기본 자료형)
+    - `Boolean`
+    - `Number`
+    - `String`
+    - `Null`
+    - `Undefined`
+    - `Symbol` (ES6에 추가)
+    - `Array`: object형
+  - 프로그래밍을 도울 몇 가지 타입이 더 제공
+    - `Any`, `Void`, `Never`, `Unknown`
+    - `Enum`
+    - `Tuple`: object형
