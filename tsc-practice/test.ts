@@ -2,7 +2,7 @@
 
 // a = 25;
 
-let a: string;
+// let a: string;
 a = "Lee";
 
 function hello(b: number) {
