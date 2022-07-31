@@ -332,3 +332,41 @@ const [first, second] = person;
 // const first: string
 // const second: number
 ```
+
+### any
+
+- 어떤 것이나 된다.
+- 어떤 타입이어도 상관없는 타입이다.
+- 이걸 최대한 쓰지 않는게 핵심
+- 왜냐면 컴파일 타임에 타입 체크가 정상적으로 이뤄지지 않기 때문
+- 그래서 컴파일 옵션 중에 `any`를 써야하는데 쓰지 않으면 오류가 나도록 하는 옵션이 있다.
+  - `noImplicitAny`
+
+```ts
+function returnAny(message: any): any {
+  console.log(message);
+}
+const an1 = returnAny("리턴은 아무거나");
+
+an1.toString();
+```
+
+- any는 계속해서 개체를 통해 전파된다.
+- 결국, 모든 편의는 타입 안전성을 잃는 대가로 온다는 것을 기억
+- 타입 안정성은 타입스크립트를 사용하는 주요 ㄷㅇ기 중 하나이며 필요하지 않은  
+  경우에는 any를 사용하지 않도록 해야한다.
+
+```ts
+let looselyTyped: any = {};
+const d = looselyTyped.a.b.c.d;
+//    ^ = let d: any
+
+function leakingAny(obj: any) {
+  const a: number = obj.number; // 타입 지정을 안해주면 a,b,c 모두 any 형식
+  const b = a + 1;
+  return b;
+}
+
+const c = leakingAny({ number: 0 });
+// c.indexOf("0"); number에는 indexOf가 없어서 에러
+```
