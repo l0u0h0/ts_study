@@ -298,3 +298,14 @@ const person2 = Object.create({ name: "Lee", age: 25 });
 ```
 
 - `primitive type이 아닌 것`을 나타내고 싶을 때 사용하는 타입
+
+### Array
+
+- 원래 자바스크립트에서 객체이다
+  - Array<type>
+  - 타입[]
+
+```ts
+let list: number[] = [1, 2, 3];
+let list: Array<number> = [1, 2, 3];
+```
