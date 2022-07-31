@@ -309,3 +309,26 @@ const person2 = Object.create({ name: "Lee", age: 25 });
 let list: number[] = [1, 2, 3];
 let list: Array<number> = [1, 2, 3];
 ```
+
+### Tuple
+
+- 배열은 항상 공통 요소의 모임
+- 튜플은 길이가 정해져있고 앞 뒤의 타입이 정확하고 다를 수 잇는 자료형이다.
+
+```ts
+let x: [string, number];
+
+x = ["hello", 415];
+
+// 위치를 맞춰서 타입 지정
+// x = [10, "lee"]; - error
+// 지정된 index가 넘어선 범위에는 undefined가 지정되어 에러남.
+// x[2] = "hello"; - wrong length
+
+const person: [string, number] = ["Lee", 25];
+
+// distructoring
+const [first, second] = person;
+// const first: string
+// const second: number
+```
