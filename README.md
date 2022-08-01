@@ -457,3 +457,202 @@ function returnVoid(message: string): void {
 // const r: void
 const r = returnVoid("리턴이 없다.");
 ```
+
+### 작성자와 사용자의 관점으로 코드 바라보기
+
+- 타입 시스템
+  - 컴파일러에게 사용하는 타입을 명시적으로 지정하는 시스템
+  - 컴파일러가 자동으로 타입을 추론하는 시스템
+- 타입스크립트의 타입 시스템
+  - 타입을 명시적으로 지정할 수 잇다.
+  - 타입을 명시적으로 지정하지 않으면, 타입스크립트 컴파일러가 자동으로 타입을 `추론`
+
+---
+
+- 하나의 함수를 두고 해당 함수를 사용하는 사람과 해당 함수를 작성한 사람의 관점
+- 타입이란 해당 변수가 할 수 있는 일을 결정한다.
+-
+
+```js
+// f1이라는 함수의 body 에서는 a를 사용할 것
+// a 가 할 수 있는 일은 a의 타입이 결정
+function f1(a) {
+  return a;
+}
+```
+
+- 함수 사용법에 대한 오해를 야기하는 자바스크립트
+-
+
+```js
+// (f2 실행의 결과가 NaN을 의도한 것이 아니라면)
+// 이 함수의 작성자는 매개변수 a가 number 타입이라는 가정으로 함수를 작성했다.
+function f2(a) {
+  return a * 28;
+}
+// 사용자는 사용법을 숙지하지 않은 채, 문자열을 사용
+console.log(f2(10)); // 280
+console.log(f2("Lee")); // NaN
+```
+
+- 타입스크립트의 추론에 의지하는 경우
+-
+
+```ts
+// 타입스크립트 코드지만,
+// a의 타입을 명시적으로 지정하지 않았기에 a는 any로 추론
+// 함수의 리턴 타입은 number로 추론 (NaN도 number의 하나이다.)
+function f3(a) {
+  return a * 28;
+}
+// 사용자는 a가 any 이기 때문에 사용법에 맞게 문자열을 사용하여 함수를 실행
+console.log(f3(10)); // 280
+console.log(f3("Lee") + 5); // NaN
+```
+
+---
+
+- `noImplicitAny` 옵션을 켜면
+  - 타입을 명시적으로 지정하지 않은 경우,  
+    타입스크립트가 추론 중 `any`라고 판단하게 되면,  
+    컴파일 에러를 발생시켜  
+    명시적으로 지정하도록 유도한다.
+- `noImplicitAny`에 의한 방어
+-
+
+```ts
+// error TS7006: Parameter 'a' implicitly has an 'any' type.
+function f3(a) {
+  return a * 38;
+}
+// 사용자의 코드를 실행할 수 없다. 컴파일이 정상적으로 마무리 될 수 있도록 수정해야 한다.
+console.log(f3(10));
+console.log(f3("Lee") + 5);
+```
+
+- number 타입으로 추론된 리턴 타입
+-
+
+```ts
+// 매개변수의 타입은 명시적으로 지정햇다.
+// 명시적으로 지정하지 않은 함수의 리턴 타입은 number로 추론
+function f4(a: number) {
+  if (a > 0) {
+    return a * 28;
+  }
+}
+// 사용자는 사용법에 맞게 숫자형을 사용하여 함수를 실행
+// 해당 함수의 리턴 타입은 number이기 때문에 타입에 따르면 이어진 연산을 바로 수행
+// 하지만 실제 undefined + 5가 실행되어 NaN이 출력
+console.log(f4(5)); // 190
+console.log(f4(-5) + 5); // NaN
+```
+
+---
+
+- `strictNullChecks` 옵션을 켜면
+  - 모든 타입에 자동으로 포함되어 있는  
+    `null`과 `undefined`를  
+    제거해준다.
+- `number | undefined` 타입으로 추론된 리턴 타입
+-
+
+```ts
+// 매개변수의 타입은 명시적으로 지정했다.
+// 명시적으로 지정하지 않은 함수의 리턴 타입은
+// number | undefined 로 추론
+function f4(a: number) {
+  if (a > 0) {
+    return a * 28;
+  }
+}
+// 사용자는 사용법에 맞게 숫자형을 사용하여 함수를 실행
+// 해당 함수의 리턴 타입은 number | undefined 이기에
+// 타입에 따르면 이어진 연산을 바로 할 수 없다.
+// 컴파일 에러를 고쳐야하기 때문에 사용자와 작성자가 의논을 해야함.
+console.log(f4(5));
+console.log(f4(-5) + 5);
+// error TS2532: Object is possibly 'undefined'.
+```
+
+- 명시적으로 리턴 타입을 지정해야할까?
+-
+
+```ts
+// 매개변수의 타입과 함수의 리턴 타입을 명시적으로 지정했다.
+// 실제 함수 구현부의 리턴 타입과 명시적으로 지정한 타입이 일치하지 않아 컴파일 에러가 발생
+// error TS2366: Function lacks ending return statement and return type does not inc
+function f5(a: number): number {
+  if (a > 0) {
+    return a * 28;
+  }
+}
+```
+
+- `noImplicitReturns` 옵션을 켜면
+  - 함수 내에서 모든 코드가 값을 리턴하지 않으면,  
+    컴파일 에러를 발생시킨다.
+- 모든 코드에서 리턴을 직접해야한다.
+-
+
+```ts
+// if가 아닌 경우 return을 직접하지않고 코드가 종료
+// error TS7030: Not all code paths return a value.
+function f5(a: number) {
+  if (a > 0) {
+    return a * 28;
+  }
+}
+```
+
+---
+
+- 매개변수에 `object`가 들어오는 경우
+-
+
+```js
+// JS
+function f6(a) {
+  return `이름은 ${a.name} 이고, 연령대는 ${
+    Math.floor(a.age / 10) * 10
+  }대 입니다.`;
+}
+console.log(f6({ name: "Lee", age: 25 })); // 이름은 Lee이고, 연령대는 20대입니다.
+console.log(f6("Lee")); // 이름은 undefined이고, 연령대는 NaN대입니다.
+```
+
+- `object literal type`
+-
+
+```ts
+function f7(a: { name: string; age: number }): string {
+  return `이름은 ${a.name} 이고, 연령대는 ${
+    Math.floor(a.age / 10) * 10
+  }대 입니다.`;
+}
+console.log(f7({ name: "Lee", age: 25 })); // 이름은 Lee이고, 연령대는 20대입니다.
+console.log(f7("Lee")); // error TS2345: Argument of type 'string' is not assignable to parameter of type '{ name: string; age: number}'.
+```
+
+---
+
+- 나만의 타입을 만드는 방법
+-
+
+```ts
+interface PersonInterface {
+  name: string;
+  age: number;
+}
+type PersonTypeAlias = {
+  name: string;
+  age: number;
+};
+function f8(a: PersonInterface): string {
+  return `이름은 ${a.name} 이고, 연령대는 ${
+    Math.floor(a.age / 10) * 10
+  }대 입니다.`;
+}
+console.log(f8({ name: "Lee", age: 25 })); // 이름은 Lee이고, 연령대는 20대입니다.
+console.log(f8("Lee")); // error TS2345: Argument of type 'string' is not assignable to parameter of type 'PersonInterface'.
+```
