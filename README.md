@@ -853,3 +853,60 @@ tellme(function sToD(d: StartupDeveloper): Developer {
 - 함수가 할당될 때 그 함수의 매개변수만 반병의 타입을 따른다.
 - 반병의 경우에는 융통성을 발휘해 에러를 발생시키지 않을 수 있는데
 - `strictFunctionTypes` 옵션을 켜면 에러가 발생할 수 있다.
+
+---
+
+### 타입 별칭(Type Alias)
+
+- `interface`랑 비슷해 보인다.
+- `primitive`, `Union Type`을 다르게 부르기 위해 사용하기도 한다.  
+  `Tuple`, `Function` 다른 형태의 타입을 여러 번 똑같이 길게 쓰는 것보다  
+  앞으로 부를 별칭을 설정하기위해 사용하기도 한다.
+- 기타 직접 작성해야하는 타입을 다른 이름으로 지정할 수도 있다.
+- 만들어진 타입의 `refer`로 사용하는 것이지, 타입을 만드는 것은 아니다.
+- `Aliasing Primitive`
+
+```ts
+type MyStringType = string;
+const str = "world";
+let myStr: MyStringType = "hello";
+myStr = str;
+/*
+별 의미가 없다..
+*/
+```
+
+- `Aliasing Union Type`
+
+```ts
+let person: string | number = 0;
+person = "Lee";
+type StringOrNumber = string | number;
+let another: StringOrNumber = 0;
+another = "Lee";
+/*
+1. 유니온 타입은 A도 가능하고 B도 가능한 타입
+2. 길게 쓸 걸 짧게 사용 가능
+*/
+```
+
+- `Aliasing Tuple`
+
+```ts
+let person: [string, number] = ["Lee", 25];
+type PersonTuple = [string, number];
+let another: PersonTuple = ["Anna", 24];
+/*
+1. 튜플 타입에 별칭을 줘 여러 군데에서 쉽게 사용할 수 있게 한다.
+*/
+```
+
+- `Aliasing Function`
+
+```ts
+type EatType = (food: string) => void;
+```
+
+- `alias`와 `interface`의 차이
+  - 타입이 타입으로써의 목적이나 존재 가치가 명확하면 `interface` 사용
+  - 그렇지 않고 다른 대상을 가르킬뿐이나 별명으로써만 존재하면 `alias` 사용
