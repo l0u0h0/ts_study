@@ -723,3 +723,133 @@ def main():
   get_sound(bird)
   get_sound(dog)
 ```
+
+### 타입 호환성(Type Compatibility)
+
+- 서브타입(1)
+
+```ts
+// sub1 타입은 sup1 타입의 서브 타입이다.
+// sub1은 리터럴 타입으로 1이다.
+let sub1: 1 = 1;
+// sup1에는 sub1을 넣을 수 있지만
+let sup1: number = sub1;
+// sub1에는 sup1을 넣을 수 없다.
+sub1 = sup1; // error! Type 'number' is not assignable to type '1'.
+
+// sub2 타입은 sup2 타입의 서브 타입이다.
+// sub2는 넘버로 된 배열이다.
+let sub2: number[] = [1];
+// sup2는 오브젝트이다. 배열도 오브젝트의 하나이기에 sub2를 넣어줄 수 있다.
+let sup2: object = sub2;
+// 오브젝트가 더 상위의 타입이기에 반대는 넣을 수 없다.
+sub2 = sup2; // error! Type '{}' is missing the following properties from type 'number[]': length, pop, push, concat, and 16 more.
+
+// sub3 타입은 sup3 타입의 서브 타입이다.
+// sub3은 넘버와 넘버가 들어가는 튜플타입이다.
+let sub3: [number, number] = [1, 2];
+// Sup3은 넘버의 배열이다. 같은 형태라면 sub3을 넣어줄 수 있지만
+let sup3: number[] = sub3;
+// 반대의 경우는 넣어줄 수 없다.
+sub3 = sup3; // error! Type 'number[]' is not assignable to type '[number, number]'. Target requires 2 element(s) but source may have fewer.
+
+// sub4 타입은 sup4 타입의 서브 타입이다.
+let sub4: number = 1;
+// any 에는 아무거나 넣을 수 있기에 sub4 포함 가능
+let sup4: any = sub4;
+// any 이기에 반대의 경우도 할당 가능
+// 예외적인 상황
+sub4 = sup4;
+
+// sub5 타입은 sup5 타입의 서브 타입이다.
+// sub5 는 never가 할당된 타입
+let sub5: never = 0 as never;
+// never 이기에 넘버에 포함 가능
+let sup5: number = sub5;
+// 반대의 경우는 에러 발생
+sub5 = sup5; // error! Type 'number' is not assignable to type 'number'.
+
+class Animal {}
+// 개가 동물에 상속됨.
+class Dog extends Animal {
+  eat() {}
+}
+
+// sub6 타입은 sup6 타입의 서브 타입이다.
+// sub6은 개 타입 할당
+let sub6: Dog = new Dog();
+// 동물에는 sub6 할당 가능
+let sup6: Animal = sub6;
+// 반대의 경우는 할당 불가능, eat이라는 프로퍼티가 없기 때문
+sub6 = sup6; // error! Property 'eat' is missing in type 'SubAnimal' but required in type 'SubDog'.
+```
+
+- 1. 같거나 서브타입인 경우, 할당이 가능하다. => 공변
+
+```ts
+// primitive type
+let sub7: string = "";
+let sup7: string | number = sub7;
+
+// object - 각각의 프로퍼티가 대응하는
+// 프로퍼티와 같거나 서브타입이어야 한다.
+let sub8: { a: string; b: number } = { a: "", b: 1 };
+let sup8: { a: string | number; b: number } = sub8;
+
+// array - object 와 마찬가지
+let sub9: Array<{ a: string; b: number }> = [{ a: "", b: 1 }];
+let sup9: Array<{ a: string | number; b: number }> = sub9;
+```
+
+- 2. 함수의 매개변수 타입만 같거나 슈퍼타입인 경우, 할당이 가능하다 => 반병
+
+```ts
+class Person {}
+// Person을 상속받은 클래스
+class Developer extends Person {
+  coding() {}
+}
+// Developer를 상속받은 클래스
+class StartupDeveloper extends Developer {
+  burning() {}
+}
+// tellme라는 함수의 인자는 함수 f를 받는다.
+// f는 Developer를 인자로 받아 Developer를 리턴ㅇ하는 함수
+function tellme(f: (d: Developer) => Developer) {}
+
+// Developer => Developer 에다가 Developer => Developer 를 할당하는 경우
+// Developer를 받아 Developer를 리턴
+tellme(function dToD(d: Developer): Developer {
+  return new Developer();
+});
+
+// Developer => Developer 에다가 Person => Developer 를 할당하는 경우
+// Person을 받아 Developer를 리턴
+// Person이 상위 클래스이기에 Person이 슈퍼타입인 경우
+tellme(function pToD(d: Person): Developer {
+  return new Developer();
+});
+
+// Developer => Developer 에다가 StartupDeveloper => Developer 를 할당하는 경우
+// StartupDeveloper를 받아 Developer를 리턴
+tellme(function sToD(d: StartupDeveloper): Developer {
+  return new Developer();
+});
+```
+
+- d => d 의 경우 뭘 하더라도 상관이 없다.
+- p => d 의 경우 뭘 하더라도 상관이 없다.
+  - `Person`은 `Developer`의 상위이기 때문
+- s => d 의 경우 `strictFunctionTypes` 옵션을 키지 않으면 에러가 난다.
+  - 왜냐, 마지막 경우의 함수 `sToD`와 함수 `tellme`를 봤을 때 매개변수로 하는  
+    d가 하위의 클래스, 즉 서브타입이기 때문이다.
+- `StartupDeveloper`가 `Developer`보다 서브타입이기때문
+- `strictFunctionTypes` 옵션
+
+  - 함수를 할당할 시에 함수의 매개변수 타입이 같거나 슈퍼타입인 경우가 아닌 경우,  
+    에러를 통해 경고한다.
+
+- 타입스크립트는 기본적으로 공변의 타입을 따른다.
+- 함수가 할당될 때 그 함수의 매개변수만 반병의 타입을 따른다.
+- 반병의 경우에는 융통성을 발휘해 에러를 발생시키지 않을 수 있는데
+- `strictFunctionTypes` 옵션을 켜면 에러가 발생할 수 있다.
