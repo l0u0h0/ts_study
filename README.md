@@ -969,3 +969,55 @@ type EatType = (food: string) => void;
 - true / false(default false)
 - `Visual Studio 2015 with TypeScript 1.8.4` 이상
 - `atom-typescript` 플러그인
+
+### extends
+
+- `tsconfig.json`도 다른 파일을 상속받고 추가로 사용할 수 있다.
+
+```json
+"extendsDefinition": {
+  "properties": {
+    "extends": {
+      "description": "Path to base configuration file to inherit from. Requires TypeScript version 2.1 or later.",
+      "type": "string"
+    }
+  }
+},
+```
+
+- using
+
+```json
+// tsconfig.json
+{
+  "extends": "./base.json",
+  "compilerOptions": {
+    ,,,
+    // "strict": true, // 꺼진 상태
+  }
+}
+// base.json
+{
+  "compileOptions": {
+    "strict": true,
+  }
+}
+```
+
+- 원래 `strict`가 꺼져있는 상태면
+
+```ts
+const a: number = undefined;
+```
+
+- 와 같은 코드가 에러가 없을텐데 `base.json`에서 켜져있기에 빨간 줄 발생
+- `extends` 옵션을 꺼주면 에러 사라짐
+- `extends`
+  - 파일 (상대) 경로면: `string`
+  - TS 2.1 이상 버젼부터 사용 가능
+- [tsconfig/bases](https://github.com/tsconfig/bases/)
+  - tsconfig에서 만든 공인된 참조 가능한 설정들
+  - 사용은
+  - `npm install --save-dev @tsconfig/설정이름`
+  - `tsconfig.json`에서
+  - `"extends": "@tsconfig/설정이름/tsconfig.json`
