@@ -1089,3 +1089,47 @@ const a: number = undefined;
     - 설정 안하면 4가지(`node_modules`, `bower_components`, `jspm_packages`,
       `<outDir>`)을 default로 제외한다.
     - `<outDir>`은 항상 제외한다.(include에 있어도)
+
+### compileOptions<br/>- typeRoots, types
+
+```json
+"typeRoots": {
+  "description": "Specify multiple folders that act like `./node_modules/@types`.",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "type": "string"
+  },
+  "markdownDescription": "Specify multiple folders that act like `./node_modules/@types`.\n\nSee more: https://www.typescriptlang.org/tsconfig#typeRoots"
+},
+"types": {
+  "description": "Specify type package names to be included without being referenced in a source file.",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "type": "string"
+  },
+  "markdownDescription": "Specify type package names to be included without being referenced in a source file.\n\nSee more: https://www.typescriptlang.org/tsconfig#types"
+},
+```
+
+```ts
+// npm i react로 리액트 설치 후
+import React from "react";
+// 에러 발생,
+// npm i --save-dev @types/react 실행
+// node_modules/@types/react 생성
+// React를 커맨드 클릭으로 눌러보면
+// node_modules/@types/react/index.d.ts 파일 열림
+```
+
+- `@types`
+- 타입스크립트 2.0부터 사용 가능해진 내장 타입 데피니션 시스템
+- 아무 설정을 안하면
+  - `node_modules/@types` 라는 모든 경로를 찾아서 사용
+- typeRoots를 사용하면
+  - 배열 안에 들어잇는 경로들 아래서만 가져온다.
+- types를 사용하면
+  - 배열 안의 모듈 혹은 `./node_moudules/@types/` 안의 모듈 이름에서 찾아온다.
+  - 빈 배열을 넣는다는 건 이 시스템을 이용하지 않겠다는 것이다
+- `typeRoots`와 `types`를 같이 사용하지 않는다.
