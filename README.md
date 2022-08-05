@@ -941,3 +941,31 @@ type EatType = (food: string) => void;
   어떤 파일을 컴파일할 지 결정
 - `compileOptions` 의 내용이 가장 많은 데  
   어떤 옵션으로 컴파일 할 지에 대한 정보가 담김.
+
+### compileOnSave
+
+```json
+"compileOnSaveDefinition": {
+  "properties": {
+    "compileOnSave": {
+      "description": "Enable Compile-on-Save for this project.",
+      "type": "boolean"
+    }
+  }
+},
+```
+
+- `tsconfig.json` 파일에서
+
+```json
+{
+  "compileOnSave": true,
+  "compilerOptions": {,,,
+  }
+}
+```
+
+- 와 같이 작성해주면 파일을 저장할 때 컴파일을 하겠다는 설정이 완료된 것이다.
+- true / false(default false)
+- `Visual Studio 2015 with TypeScript 1.8.4` 이상
+- `atom-typescript` 플러그인
