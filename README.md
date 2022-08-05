@@ -910,3 +910,34 @@ type EatType = (food: string) => void;
 - `alias`와 `interface`의 차이
   - 타입이 타입으로써의 목적이나 존재 가치가 명확하면 `interface` 사용
   - 그렇지 않고 다른 대상을 가르킬뿐이나 별명으로써만 존재하면 `alias` 사용
+
+---
+
+## Compiler
+
+### Compilation Context
+
+- `Compilation Context`
+- 컴파일할 때의 맥락
+- 컴파일할 때 어떤 파일과 어떤 옵션을 적용할 것인지에 대한 규명
+- 어떤 파일을 컴파일할 지 컴파일을 안할 지에 대한 정보를 담고 있다.
+- 타입스크립트를 자바스크립트로 변환할 때 어떤 옵션을 적용할 지에 대한 정보가 담겨있다.
+- 보통, `tsconfig.json`이라는 파일에 적혀있다.
+
+### tsconfig schema
+
+- [tsconfig](http://json.schemastore.org/tsconfig)
+- 최상위 프로퍼티
+  - compileOnSave
+  - extends
+  - compileOptions
+  - files
+  - include
+  - exclude
+  - references
+  - ~~typeAcquisition~~
+  - ~~tsNode~~
+- `files`, `include`, `exclude` 세 개를 묶어  
+  어떤 파일을 컴파일할 지 결정
+- `compileOptions` 의 내용이 가장 많은 데  
+  어떤 옵션으로 컴파일 할 지에 대한 정보가 담김.
