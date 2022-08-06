@@ -1669,3 +1669,7 @@ syntex 에러가 ts error로 나온다.
 <br/>
 
 ### interface extends interface
+
+<br/>
+
+### function interface
