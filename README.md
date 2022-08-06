@@ -1336,3 +1336,196 @@ import React from "react";
   - 지정하지 않으면 전체 프로젝트 폴더 내에 있는 파일 중 ts파일을 컴파일
 - outDir
   - 컴파일된 파일이 생성될 경로
+
+---
+
+### compileOptions<br/> &nbsp;- strict
+
+```json
+"strict": {
+  "description": "Enable all strict type checking options.",
+  "type": "boolean",
+  "default": false,
+  "markdownDescription": "Enable all strict type checking options.\n\nSee more: https://www.typescriptlang.org/tsconfig#strict"
+},
+```
+
+- #### Enable all strict type checking options
+
+  - `--noImplicitAny`
+  - `--noImplicitThis`
+  - `--strictNullChecks`
+  - `--strictFucntionTypes`
+  - `--strictPropertyInitialization`
+  - `--strictBindCallApply`
+  - `--alwaysStrict`
+    <br/><br/>
+
+---
+
+- `--noImplicitAny`
+
+> Raise error on expressions and declarations with an implied `any` type
+
+명시적이지 않게 `any`타입을 사용하여, 표현식과 선언에 사용하면, 에러를 발생
+
+```ts
+// noImplicitAny
+function noImplicitAnyTestFunc(arg) {
+  console.log(arg);
+}
+// [ts] Parameter 'arg' implicitly has an 'any' type.
+// (parameter) arg: any
+```
+
+- 타입스크립트가 추론을 실패한 경우, any가 맞으면, any라고 지정하라.
+- 아무것도 선언하지 않으면 에러 발생
+- 이 오류를 해결하면, any라고 지정되어 있지 않은 경우는 any가 아닌 것이다.  
+  (타입 추론이 되었으므로)
+- `suppressImplicitAnyIndexErrors`
+
+> Suppress --noImplicitAny errors for indexing objects lacking index signatures.
+> See issue #1232 for more details
+
+noImplicitAny를 사용할 때, 인덱스 객체에 인덱스 시그니쳐가 없는 경우  
+오류가 발생하는데 이를 예외처리한다.
+
+```ts
+// suppressInplicitAnyIndexErrors
+var obj = {
+  bar: 10,
+};
+
+obj["foo"] = 10; // Error: Index signature of object type implicitly has an 'any' type
+obj["bar"] = 10; // Okay
+obj.baz = 10;
+```
+
+- `obj['foo']`로 사용할 때, 인덱스 객체라 판단하여, 타입에 인덱스 시그니처가 없는 경우  
+  에러를 발생시킨다.
+- 이때 `suppressImplicitAnyIndexErrors` 옵션을 사용하면, 예외로 간주하여  
+  에러를 발생시키지 않는다.
+  <br/><br/>
+
+- `--noImplicitThis`
+
+> Raise error on this expressions with an implied `any` type.
+
+명시적이지 않게 `any` 타입을 사용하여, this 표현식에 사용하면, 에러를 발생
+
+```ts
+// noImplicitThis
+function noImplicitThisTestFunc(name: string, age: number) {
+  this.name = name;
+  this.age = age;
+  // [ts] 'this' implicitly has type 'any' because it does not have a type annotation.
+  return this;
+}
+```
+
+```ts
+// noImplicitThis
+function noImplicitThisTestFunc(this, name: string, age: number) {
+  //                            error
+  // [ts] Parameter 'this' implicitly has an 'any' type.
+  this.name = name;
+  this.age = age;
+
+  return this;
+}
+```
+
+- 첫 번쨰 매개변수 자리에 `this`를 놓고, `this`에 대한 타입을 어떤 것이라도  
+  표현하지 않으면, `noImplicitAny`가 오류를 발생시킨다.
+- `JS`에서는 매개변수에 `this`를 넣으면, 이미 예약된 키워드라 `SyntaxError`를 발생
+- `call / apply / bind`와 같이 `this`를 대체하여 함수 콜을 하는 용도로도 쓰임
+- 그래서 `this`를 `any`로 명시적으로 지정하는 것은 합리적이다.  
+  (구체적인 사용처가 있는 경우 타입을 표현하기도 한다.)
+
+```ts
+// no ImplicitThis 2
+class NoImplicitThisTestClass {
+  private _name: string;
+  private _age: number;
+
+  constructor(name: string, age: number) {
+    this._name = name;
+    this._age = age;
+  }
+
+  public print(this: NoImplicitThisTestClass) {
+    console.log(this._name, this._age);
+  }
+}
+new NoImplicitThisTestClass("Lee", 25).print();
+```
+
+- `class`에서는 `this`를 사용하면서, `noImplicitThis`와 관련한 에러가 나지 않는다.
+- `class`에서 `생성자`를 제외한 멤버 함수의 첫 번째 매개변수도 일반 함수와 마찬가지로  
+  `this`를 사용할 수 있다.
+
+<br/><br/>
+
+- `--strictNullChecks`
+
+> In strict null checking mode, the null and undefined values are not in the  
+> domain of every type and are only assignable to themselves and any  
+> (the one exception being that undefined is also assignable to void.)
+
+- `strictNullCheck` 모드에서는 널 및 언디파인드 값이 모든 유형의 도메인에  
+  속하지 않으며, 그 자신을 타입으로 가지거나, any일 경우에만 할당이 가능하다.
+- 한가지 예외는 undefined 에 void 할당 가능
+
+```ts
+// strictNullChecks
+const a: number = null;
+const b: string = undefined;
+const c: number | null = null;
+const d: any = null;
+const e: any = undefined;
+const f: void = undefined;
+// 적용하지 않으면
+// a, b의 경우 에러 발생
+```
+
+- `strictNullChecks`를 적용하지 않으면,
+  - 모든 타입은 null, undefined를 가질 수 있다.
+  - string으로 타입을 지정해도, null 혹은 undefined를 할당할 수 있다.
+- `strictNullChecks`를 적용하면
+  - 모든 타입은 null, undefined를 가질 수 없고, 가지려면 union type을  
+    이용하여 직접 명시해야 한다.
+  - any 타입은 null과 undefined를 가진다. 예외적으로 void는 undefined를 가진다.
+- strictNullChecks를 적용하지 않고, 어떤 값이 null과 undefined를 가진다는 것을  
+  암묵적으로 인정하고 계속 사용하다보면, 정확히 어떤 타입이 오는지를  
+  개발자 스스로가 간과할 수 있따.
+- 정말로 null과 undefined를 가질 수 있는 경우, 해당 값을 조건부로 제외하고  
+  사용하는 것이 좋다.
+- 이 옵션을 켜고 사용하는 경우
+- 사용하려는 함수를 선언할 때부터 매개변수와 리턴 값에 정확한 타입을 지정하려는  
+  노력을 기울여야하고, 기울이게 될 것이다.
+
+<br/><br/>
+
+- `--strictFunctionTypes`
+
+> Disable bivariant parameter checking for function types.
+
+함수 타입에 대한 bivariant 매개변수 검사를 비활성화한다.
+
+```
+(Animal -> Greyhound) <: (Dog -> Dog)
+```
+
+- 반환 타입은 공변적(covariant)
+- 인자 타입은 반공변적(contravariant)
+- 그런데 타입스크립트에서 인자 타입은 공변적이면서 반공변적인게 문제!
+- 이 문제를 해결하는 옵션이 `strictFunctionTypes`
+- 옵션을 켜면, 에러가 안나던게 에러 나게 함.
+
+```ts
+const button = document.querySelector("#id") as HTMLButtonElement;
+
+button.addEventListner("keydown", (e: MouseEvent) => {});
+```
+
+이전에는 위와 같은 코드도 에러를 발생시키지 않았지만, 이제는 발생한다.
