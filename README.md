@@ -1677,3 +1677,101 @@ syntex 에러가 ts error로 나온다.
 <br/>
 
 ### Readonly interface Properties
+
+<br/>
+
+### type alias vs interface
+
+- function
+
+```ts
+// type alias
+type EatType = (food: string) => void;
+
+// interface
+interface IEat {
+  (food: string): void;
+}
+```
+
+- array
+
+```ts
+// type alias
+type PersonList = string[];
+
+// interface
+interface IPersonList {
+  [index: number]: string;
+}
+```
+
+- intersection
+
+```ts
+interface ErrorHandling {
+  success: boolean;
+  error?: { message: string };
+}
+interface ArtistData {
+  artists: { name: string }[];
+}
+
+// type alias
+type ArtistsResponseType = ArtistsData & ErrorHandling;
+
+// interface
+interface IArtistsResponse extends ArtistsData, ErrorHandling {}
+
+let art: ArtistsResponseType;
+let iar: IArtistsResponse;
+```
+
+- union types
+
+```ts
+interface Bird {
+  fly(): void;
+  layEggs(): void;
+}
+interface Fish {
+  swim(): void;
+  layEggs(): void;
+}
+
+type PetType = Bird | Fish;
+
+interface IPet extends PetType {}
+// error TS2312: An interface can only extend an object type or intersection of object types with statitcally known members.
+class Pet implements PetType {}
+// error TS2422: A class can only implement an object type or intersection of object types with statically known members.
+```
+
+- Declaration Merging - interface
+
+```ts
+interface MergingInterface {
+  a: string;
+}
+interface MergingInterface {
+  b: string;
+}
+let mi: MerginInterface;
+// mi. 해보면 a, b 둘 다 사용 가능
+```
+
+- Declaration Merging - type alias
+
+```ts
+type MergingType = {
+  a: string;
+};
+type MergingType = {
+  b: string;
+};
+// Error
+// Duplicate identifier 'MergingType'
+```
+
+> 기본적으로 `type alias`는 어떤 타입을 부르는 이름(별칭)이고  
+> `interface`는 어떤 타입을 만들어내는 것이라 본다.
