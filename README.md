@@ -1657,3 +1657,11 @@ syntex 에러가 ts error로 나온다.
 <br/>
 
 ### optional property_2
+
+<br/>
+
+### function in interface
+
+<br/>
+
+### class implement interface
