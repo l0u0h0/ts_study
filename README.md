@@ -1529,3 +1529,119 @@ button.addEventListner("keydown", (e: MouseEvent) => {});
 ```
 
 이전에는 위와 같은 코드도 에러를 발생시키지 않았지만, 이제는 발생한다.
+
+<br/><br/>
+
+- `--strictPropertyInitialization`
+
+> Ensure non-undefined class properties are initailzed in the constructor
+
+정의되지 않은 클래스의 속성이 생성자에서 초기화되었는지 확인한다.  
+이 옵션을 사용하려면 `--strictNullChecks`를 사용하도록 설정해야한ㄷㅏ.
+
+```ts
+// strictPropertyInitailization
+class Person {
+  private _name: string;
+  private _age: number;
+  // error
+  // [ts] Property '_age' has no initializer and is not definitely assignmet in the constructor.
+
+  constructor() {}
+
+  public print() {
+    console.log(this._name, this._age);
+  }
+}
+```
+
+- constructor 에서 초기값을 할당한 경우 => 정상
+
+```ts
+// strictPropertyInitailization
+class Person {
+  private _name: string;
+  private _age: number;
+
+  constructor(name: string, age: number) {
+    this._name = name;
+    this._age = age;
+  }
+
+  public print() {
+    console.log(this._name, this._age);
+  }
+}
+```
+
+- constructor에서 안하는 경우
+  - 보통 다른 함수로 이니셜라이즈 하는 경우 (`async` 함수)
+  - constructor에는 async를 사용할 수 없다.
+
+```ts
+// strictPropertyInitailization
+class Person {
+  private _name!: string;
+  private _age!: number;
+  // ! 붙이는 이유
+  // 외부에서 이니셜라이즈한걸 호출할 경우
+  // 클래스 자체에서는 정말 할당됐는지 보장할 수 없기에
+  // 개발자가 !를 붙여서 어디선가 개발자가 할당시킬 것이니 에러를 무시해달라는 요청
+
+  public async initalize(name: string, age: number) {
+    this._name = name;
+    this._age = age;
+  }
+
+  public print() {
+    console.log(this._name, this._age);
+  }
+}
+```
+
+<br/><br/>
+
+- `--strictBindCallApply`
+
+> Enable stricter checking of of the bind, call, and apply methods on functions
+
+bind, call, apply 에 대한 더 엄격한 검사 수행
+
+- Function의 내장함수인 bind/call/apply 를 사용할 때,  
+  엄격하게 체크하도록 하는 옵션이다.
+- bind는 해당 함수 안에서 사용할 this와 인자를 설정해주는 역할을 하고  
+  call과 apply는 this와 인자를 설정한 후, 실행까지 한다.
+- call, apply는 인자를 설정하는 방식에 차이점이 있다.
+  - call은 함수의 인자를 여러 인자의 나열로 넣어서 사용하고,  
+    apply는 모든 인자를 배열 하나로 넣어서 사용한다.
+
+<br/><br/>
+
+- `--alwaysStrict`
+
+> Parse in strict mode and emit "use strict" for each source file
+
+각 소스파일에 대해 JS의 strict mode로 코드를 분석하고,  
+"엄격하게 사용" 을 해제한다.
+
+```ts
+// alwaysStrict
+var e = { p: 1, p: 2 };
+// [ts] An object literal cannot have multiple properties with the same name in strict mode.
+// [ts] Duplicate identifier 'p'.
+```
+
+syntex 에러가 ts error로 나온다.
+
+<br/>
+
+```js
+"use strict";
+// 변환된 코드 파일~~~
+```
+
+컴파일된 JS 파일에 "use strict" 추가 됨.
+
+---
+
+- `"strict"` 옴션은 필수로 키는 것이 강력하게 타입스크립트를 사용할 수 있는 방법이다.
