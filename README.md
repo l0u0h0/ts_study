@@ -1133,3 +1133,178 @@ import React from "react";
   - 배열 안의 모듈 혹은 `./node_moudules/@types/` 안의 모듈 이름에서 찾아온다.
   - 빈 배열을 넣는다는 건 이 시스템을 이용하지 않겠다는 것이다
 - `typeRoots`와 `types`를 같이 사용하지 않는다.
+
+### compileOptions<br/>&nbsp; - target, lib
+
+- `target`
+
+```json
+"target": {
+  "description": "Set the JavaScript language version for emitted JavaScript and include compatible library declarations.",
+  "type": "string",
+  "default": "ES3",
+  "anyOf": [
+    {
+      "enum": [
+        "ES3",
+        "ES5",
+        "ES6",
+        "ES2015",
+        "ES2016",
+        "ES2017",
+        "ES2018",
+        "ES2019",
+        "ES2020",
+        "ES2021",
+        "ES2022",
+        "ESNext"
+      ]
+    },
+    {
+      "pattern": "^([Ee][Ss]([356]|(20(1[56789]|2[012]))|[Nn][Ee][Xx][Tt]))$"
+    }
+  ],
+  "markdownDescription": "Set the JavaScript language version for emitted JavaScript and include compatible library declarations.\n\nSee more: https://www.typescriptlang.org/tsconfig#target"
+},
+```
+
+- ES3, ES5에서는 통용되지 않는 애로우 함수는 컴파일하여 js 파일로 변환하면,  
+  애로우 함수가 아닌 일반 `function`문으로 바뀌게 된다.
+- `tsconfig.json`에서 타겟 설정을 es6로 바꿔준다면 애로우 함수가 그대로 변환된다.
+
+- `lib`
+
+```json
+"lib": {
+  "description": "Specify a set of bundled library declaration files that describe the target runtime environment.",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "type": "string",
+    "anyOf": [
+      {
+        "enum": [
+          "ES5",
+          "ES6",
+          "ES2015",
+          "ES2015.Collection",
+          "ES2015.Core",
+          "ES2015.Generator",
+          "ES2015.Iterable",
+          "ES2015.Promise",
+          "ES2015.Proxy",
+          "ES2015.Reflect",
+          "ES2015.Symbol.WellKnown",
+          "ES2015.Symbol",
+          "ES2016",
+          "ES2016.Array.Include",
+          "ES2017",
+          "ES2017.Intl",
+          "ES2017.Object",
+          "ES2017.SharedMemory",
+          "ES2017.String",
+          "ES2017.TypedArrays",
+          "ES2018",
+          "ES2018.AsyncGenerator",
+          "ES2018.AsyncIterable",
+          "ES2018.Intl",
+          "ES2018.Promise",
+          "ES2018.Regexp",
+          "ES2019",
+          "ES2019.Array",
+          "ES2019.Object",
+          "ES2019.String",
+          "ES2019.Symbol",
+          "ES2020",
+          "ES2020.BigInt",
+          "ES2020.Promise",
+          "ES2020.String",
+          "ES2020.Symbol.WellKnown",
+          "ESNext",
+          "ESNext.Array",
+          "ESNext.AsyncIterable",
+          "ESNext.BigInt",
+          "ESNext.Intl",
+          "ESNext.Promise",
+          "ESNext.String",
+          "ESNext.Symbol",
+          "DOM",
+          "DOM.Iterable",
+          "ScriptHost",
+          "WebWorker",
+          "WebWorker.ImportScripts",
+          "Webworker.Iterable",
+          "ES7",
+          "ES2021",
+          "ES2020.SharedMemory",
+          "ES2020.Intl",
+          "ES2021.Promise",
+          "ES2021.String",
+          "ES2021.WeakRef",
+          "ESNext.WeakRef",
+          "es2021.intl",
+          "ES2022",
+          "ES2022.Array",
+          "ES2022.Error",
+          "ES2022.Intl",
+          "ES2022.Object",
+          "ES2022.String"
+        ]
+      },
+      {
+        "pattern": "^[Ee][Ss]5|[Ee][Ss]6|[Ee][Ss]7$"
+      },
+      {
+        "pattern": "^[Ee][Ss]2015(\\.([Cc][Oo][Ll][Ll][Ee][Cc][Tt][Ii][Oo][Nn]|[Cc][Oo][Rr][Ee]|[Gg][Ee][Nn][Ee][Rr][Aa][Tt][Oo][Rr]|[Ii][Tt][Ee][Rr][Aa][Bb][Ll][Ee]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Pp][Rr][Oo][Xx][Yy]|[Rr][Ee][Ff][Ll][Ee][Cc][Tt]|[Ss][Yy][Mm][Bb][Oo][Ll].[Ww][Ee][Ll][Ll][Kk][Nn][Oo][Ww][Nn]|[Ss][Yy][Mm][Bb][Oo][Ll]))?$"
+      },
+      {
+        "pattern": "^[Ee][Ss]2016(\\.[Aa][Rr][Rr][Aa][Yy].[Ii][Nn][Cc][Ll][Uu][Dd][Ee])?$"
+      },
+      {
+        "pattern": "^[Ee][Ss]2017(\\.([Ii][Nn][Tt][Ll]|[Oo][Bb][Jj][Ee][Cc][Tt]|[Ss][Hh][Aa][Rr][Ee][Dd][Mm][Ee][Mm][Oo][Rr][Yy]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Tt][Yy][Pp][Ee][Dd][Aa][Rr][Rr][Aa][Yy][Ss]))?$"
+      },
+      {
+        "pattern": "^[Ee][Ss]2018(\\.([Aa][Ss][Yy][Nn][Cc][Ii][Tt][Ee][Rr][Aa][Bb][Ll][Ee]|[Ii][Nn][Tt][Ll]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Rr][Ee][Gg][Ee][Xx][Pp]))?$"
+      },
+      {
+        "pattern": "^[Ee][Ss]2019(\\.([Aa][Rr][Rr][Aa][Yy]|[Oo][Bb][Jj][Ee][Cc][Tt]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ss][Yy][Mm][Bb][Oo][Ll]))?$"
+      },
+      {
+        "pattern": "^[Ee][Ss]2020(\\.([Bb][Ii][Gg][Ii][Nn][Tt]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ss][Yy][Mm][Bb][Oo][Ll].[Ww][Ee][Ll][Ll][Kk][Nn][Oo][Ww][Nn]))?$"
+      },
+      {
+        "pattern": "^[Ee][Ss]2021(\\.([Ii][Nn][Tt][Ll]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ww][Ee][Aa][Kk][Rr][Ee][Ff]))?$"
+      },
+      {
+        "pattern": "^[Ee][Ss]2022(\\.([Aa][Rr][Rr][Aa][Yy]|[Ee][Rr][Rr][Oo][Rr]|[Ii][Nn][Tt][Ll]|[Oo][Bb][Jj][Ee][Cc][Tt]|[Ss][Tt][Rr][Ii][Nn][Gg]))?$"
+      },
+      {
+        "pattern": "^[Ee][Ss][Nn][Ee][Xx][Tt](\\.([Aa][Rr][Rr][Aa][Yy]|[Aa][Ss][Yy][Nn][Cc][Ii][Tt][Ee][Rr][Aa][Bb][Ll][Ee]|[Bb][Ii][Gg][Ii][Nn][Tt]|[Ii][Nn][Tt][Ll]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ss][Yy][Mm][Bb][Oo][Ll]|[Ww][Ee][Aa][Kk][Rr][Ee][Ff]))?$"
+      },
+      {
+        "pattern": "^[Dd][Oo][Mm](\\.[Ii][Tt][Ee][Rr][Aa][Bb][Ll][Ee])?$"
+      },
+      {
+        "pattern": "^[Ss][Cc][Rr][Ii][Pp][Tt][Hh][Oo][Ss][Tt]$"
+      },
+      {
+        "pattern": "^[Ww][Ee][Bb][Ww][Oo][Rr][Kk][Ee][Rr](\\.[Ii][Mm][Pp][Oo][Rr][Tt][Ss][Cc][Rr][Ii][Pp][Tt][Ss])?$"
+      }
+    ]
+  },
+  "markdownDescription": "Specify a set of bundled library declaration files that describe the target runtime environment.\n\nSee more: https://www.typescriptlang.org/tsconfig#lib"
+},
+```
+
+- target과 lib
+- `target`
+  - 빌드의 결과물을 어떤 버전으로 할 것이냐
+  - 지정을 안하면 es3, ~~es2016~~
+- `lib`
+  - 기본 타입 데피니션 라이브러리를 어떤 것을 사용할 것이냐
+  - lib를 지정하지 않을 때,
+    - 타겟이 'es3'이고 디폴트로 lib.d.ts를 사용한다.
+    - 타겟이 'es5'이면 디폴트로 dom, es5, scripthost를 사용한다.
+    - 타겟이 'es6'이면 디폴트로 dom, es6, dom.iterable, scripthost를 사용한다.
+  - lib를 지정하면 그 lib 배열로만 라이브러리를 사용한다.
+    - 빈 배열은 => 'no definition found 어쩌구저쩌구'
