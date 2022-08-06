@@ -1649,3 +1649,7 @@ syntex 에러가 ts error로 나온다.
 ---
 
 ### What are Interfaces??
+
+<br/>
+
+### optional property
