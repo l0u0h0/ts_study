@@ -1645,3 +1645,7 @@ syntex 에러가 ts error로 나온다.
 ---
 
 - `"strict"` 옴션은 필수로 키는 것이 강력하게 타입스크립트를 사용할 수 있는 방법이다.
+
+---
+
+### What are Interfaces??
