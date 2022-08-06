@@ -1308,3 +1308,31 @@ import React from "react";
     - 타겟이 'es6'이면 디폴트로 dom, es6, dom.iterable, scripthost를 사용한다.
   - lib를 지정하면 그 lib 배열로만 라이브러리를 사용한다.
     - 빈 배열은 => 'no definition found 어쩌구저쩌구'
+
+---
+
+### compileOpionts<br/> &nbsp;- outDir, outFile, rootDir
+
+```json
+"outFile": {
+  "description": "Specify a file that bundles all outputs into one JavaScript file. If `declaration` is true, also designates a file that bundles all .d.ts output.",
+  "type": "string",
+  "markdownDescription": "Specify a file that bundles all outputs into one JavaScript file. If `declaration` is true, also designates a file that bundles all .d.ts output.\n\nSee more: https://www.typescriptlang.org/tsconfig#outFile"
+},
+"outDir": {
+  "description": "Specify an output folder for all emitted files.",
+  "type": "string",
+  "markdownDescription": "Specify an output folder for all emitted files.\n\nSee more: https://www.typescriptlang.org/tsconfig#outDir"
+},
+"rootDir": {
+  "description": "Specify the root folder within your source files.",
+  "type": "string",
+  "markdownDescription": "Specify the root folder within your source files.\n\nSee more: https://www.typescriptlang.org/tsconfig#rootDir"
+},
+```
+
+- rootDir
+  - 컴파일 될 파일의 루트 경로,
+  - 지정하지 않으면 전체 프로젝트 폴더 내에 있는 파일 중 ts파일을 컴파일
+- outDir
+  - 컴파일된 파일이 생성될 경로
