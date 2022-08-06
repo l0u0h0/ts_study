@@ -1664,4 +1664,4 @@ syntex 에러가 ts error로 나온다.
 
 <br/>
 
-### class implement interface
+### class implements interface
