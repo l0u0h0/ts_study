@@ -1816,3 +1816,21 @@ type MergingType = {
 - `private` 으로 설정하면 클래스 외부에서 접근할 수 없다.
 - JS에서 `private` 지원하지 않아 오랫동안 프로퍼티나 메서드 이름 앞에  
   `_` 를 붙여 표현했다.
+
+### initialization in constructor parameters
+
+```ts
+class Person {
+  name: string;
+  age: number;
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+}
+// 접근 제어자를 사용해 이렇게 바꿀 수 있다.
+// public 말고 다른 것도 가능
+class Person {
+  constructor(public name: string, public age: number) {}
+}
+```

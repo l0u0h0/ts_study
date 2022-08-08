@@ -8,11 +8,10 @@
 // const p1 = new Person("Lee");
 // console.log(p1);
 class Person {
-    constructor(age) {
-        this.name = "Lee";
+    constructor(name, age) {
+        this.name = name;
         this.age = age;
     }
 }
-const p1 = new Person(25);
+const p1 = new Person("Lee", 25);
 console.log(p1);
-console.log(p1.age);
