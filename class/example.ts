@@ -17,22 +17,20 @@
 // console.log(p1);
 
 class Person {
-  public constructor(private _name: string, private age: number) {}
+  public readonly name: string = "Lee";
+  private readonly country: string;
 
-  // get을 하는 함수를 getter
-  // 읽기전용
-  get name() {
-    return this._name + " Lee";
+  public constructor(private _name: string, private age: number) {
+    this.country = "Korea";
   }
 
-  // set을 하는 함수를 setter
-  // 쓰기전용
-  set name(n: string) {
-    this._name = n;
+  hello() {
+    console.log(this.country);
   }
 }
 
 const p1: Person = new Person("Lee", 25);
 console.log(p1.name);
-p1.name = "Duck";
-console.log(p1.name);
+p1.hello();
+// p1.name = "Duck";
+// console.log(p1.name);

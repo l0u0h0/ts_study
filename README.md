@@ -1859,3 +1859,24 @@ console.log(p1.name);
 p1.name = "Duck";
 console.log(p1.name);
 ```
+
+### readonly properties
+
+```ts
+class Person {
+  public readonly name: string = "Lee";
+  private readonly country: string;
+
+  public constructor(private _name: string, private age: number) {
+    this.country = "Korea";
+  }
+
+  hello() {
+    console.log(this.country);
+  }
+}
+
+const p1: Person = new Person("Lee", 25);
+console.log(p1.name);
+p1.hello();
+```

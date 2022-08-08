@@ -16,17 +16,16 @@ class Person {
     constructor(_name, age) {
         this._name = _name;
         this.age = age;
+        this.name = "Lee";
+        this.country = "Korea";
+        this.country = "Japan";
     }
-    get name() {
-        // console.log("get");
-        return this._name + " Lee";
-    }
-    set name(n) {
-        console.log("set");
-        this._name = n;
+    hello() {
+        console.log(this.country);
     }
 }
 const p1 = new Person("Lee", 25);
-console.log(p1.name); // get을 하는 함수를 getter
-p1.name = "Duck"; // set을 하는 함수를 setter
 console.log(p1.name);
+p1.hello();
+// p1.name = "Duck";
+// console.log(p1.name);
