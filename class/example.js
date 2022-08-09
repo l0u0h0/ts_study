@@ -30,35 +30,49 @@
 // class => object
 // {Lee: "male", jade: "male"}
 // {chloe: "female", alex: "male", anna: "female"}
-class Students {
-    constructor() {
-        // 항상 존재해야하는 프로퍼티가 있다면
-        this.duck = "male";
-    }
-}
-const a = new Students();
-a.lee = "male";
-a.jade = "male";
-console.log(a);
-const b = new Students();
-b.chloe = "female";
-b.alex = "male";
-b.anna = "female";
-console.log(b);
+// class Students {
+//   [index: string]: "male" | "female";
+//   // 항상 존재해야하는 프로퍼티가 있다면
+//   duck: "male" = "male";
+// }
+// const a = new Students();
+// a.lee = "male";
+// a.jade = "male";
+// console.log(a);
+// const b = new Students();
+// b.chloe = "female";
+// b.alex = "male";
+// b.anna = "female";
+// console.log(b);
 // -------===--==-=-===-=-=-==-
-class Person {
-    hello() {
-        console.log("hello", Person.CITY);
-    }
-    change() {
-        Person.CITY = "LA";
+// class Person {
+//   private static CITY = "Seoul";
+//   public hello() {
+//     console.log("hello", Person.CITY);
+//   }
+//   public change() {
+//     Person.CITY = "LA";
+//   }
+// }
+// const p1 = new Person();
+// p1.hello();
+// const p2 = new Person();
+// p2.hello();
+// p1.change();
+// p2.hello();
+// Person.hello();
+class ClassName {
+    constructor() { }
+    static getInstance() {
+        // ClassName으로부터 만든 오브젝트가 있으면 그걸 리턴
+        // 없으면 만든다.
+        if (ClassName.instance === null) {
+            ClassName.instance = new ClassName();
+        }
+        return ClassName.instance;
     }
 }
-Person.CITY = "Seoul";
-const p1 = new Person();
-p1.hello();
-const p2 = new Person();
-p2.hello();
-p1.change();
-p2.hello();
-// Person.hello();
+ClassName.instance = null;
+const a = ClassName.getInstance();
+const b = ClassName.getInstance();
+console.log(a === b);

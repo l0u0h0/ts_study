@@ -1933,3 +1933,30 @@ p2.hello();
 ```
 
 - `static`을 사용하면 Person.~~~ 로 호출해서 사용가능
+- 또한 공유 가능
+
+### Singletons
+
+- 싱글톤 패턴이란 어플리케이션이 실행되어있는 동안에 클래스로부터  
+  단 하나의 오브젝트만 생성을 해 사용하는 패턴
+
+```ts
+class ClassName {
+  private static instance: ClassName | null = null;
+  public static getInstance(): ClassName {
+    // ClassName으로부터 만든 오브젝트가 있으면 그걸 리턴
+    // 없으면 만든다.
+    if (ClassName.instance === null) {
+      ClassName.instance = new ClassName();
+    }
+    return ClassName.instance;
+  }
+
+  private constructor() {}
+}
+
+const a = ClassName.getInstance();
+const b = ClassName.getInstance();
+
+console.log(a === b);
+```
