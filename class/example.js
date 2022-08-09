@@ -31,6 +31,10 @@
 // {Lee: "male", jade: "male"}
 // {chloe: "female", alex: "male", anna: "female"}
 class Students {
+    constructor() {
+        // 항상 존재해야하는 프로퍼티가 있다면
+        this.duck = "male";
+    }
 }
 const a = new Students();
 a.lee = "male";
@@ -41,3 +45,20 @@ b.chloe = "female";
 b.alex = "male";
 b.anna = "female";
 console.log(b);
+// -------===--==-=-===-=-=-==-
+class Person {
+    hello() {
+        console.log("hello", Person.CITY);
+    }
+    change() {
+        Person.CITY = "LA";
+    }
+}
+Person.CITY = "Seoul";
+const p1 = new Person();
+p1.hello();
+const p2 = new Person();
+p2.hello();
+p1.change();
+p2.hello();
+// Person.hello();
