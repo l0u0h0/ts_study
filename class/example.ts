@@ -78,21 +78,48 @@
 // p2.hello();
 // Person.hello();
 
-class ClassName {
-  private static instance: ClassName | null = null;
-  public static getInstance(): ClassName {
-    // ClassName으로부터 만든 오브젝트가 있으면 그걸 리턴
-    // 없으면 만든다.
-    if (ClassName.instance === null) {
-      ClassName.instance = new ClassName();
-    }
-    return ClassName.instance;
+// class ClassName {
+//   private static instance: ClassName | null = null;
+//   public static getInstance(): ClassName {
+//     // ClassName으로부터 만든 오브젝트가 있으면 그걸 리턴
+//     // 없으면 만든다.
+//     if (ClassName.instance === null) {
+//       ClassName.instance = new ClassName();
+//     }
+//     return ClassName.instance;
+//   }
+
+//   private constructor() {}
+// }
+
+// const a = ClassName.getInstance();
+// const b = ClassName.getInstance();
+
+// console.log(a === b);
+
+class Parent {
+  constructor(protected _name: string, private _age: number) {}
+
+  public print(): void {
+    console.log(`이름: ${this._name}, 나이: ${this._age}`);
   }
 
-  private constructor() {}
+  protected printName(): void {
+    console.log(this._name, this._age);
+  }
 }
 
-const a = ClassName.getInstance();
-const b = ClassName.getInstance();
+const p = new Parent("Bare", 25);
+p.print();
 
-console.log(a === b);
+class Child extends Parent {
+  public gender = "female";
+
+  constructor(age: number) {
+    super("DuckGyung Jr.", age);
+    this.printName();
+  }
+}
+
+const c = new Child(5);
+c.print();

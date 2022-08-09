@@ -1960,3 +1960,36 @@ const b = ClassName.getInstance();
 
 console.log(a === b);
 ```
+
+### 상속(Inheritance)
+
+- 클래스가 다른 클래스를 가져다가 자신만의 기능을 추가해 사용하는 것
+
+```ts
+class Parent {
+  constructor(protected _name: string, private _age: number) {}
+
+  public print(): void {
+    console.log(`이름: ${this._name}, 나이: ${this._age}`);
+  }
+
+  protected printName(): void {
+    console.log(this._name, this._age);
+  }
+}
+
+const p = new Parent("Bare", 25);
+p.print();
+
+class Child extends Parent {
+  public gender = "female";
+
+  constructor(age: number) {
+    super("DuckGyung Jr.", age);
+    this.printName();
+  }
+}
+
+const c = new Child(5);
+c.print();
+```
