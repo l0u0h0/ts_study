@@ -1880,3 +1880,32 @@ const p1: Person = new Person("Lee", 25);
 console.log(p1.name);
 p1.hello();
 ```
+
+### index Signatures in class
+
+- 클래스는 객체를 만들어내는 청사진 역할
+- 매번 다른 객체를 만들어내야한다면?
+- 인덱스 시그니쳐가 의미하는 바는
+- 프로퍼티가 고정된 형태가 아니라 항상 바뀌는 동적인 경우
+- 고려해볼만한 기능이다.
+
+```ts
+class Students {
+  [index: string]: "male" | "female";
+  // 항상 존재해야하는 프로퍼티가 있다면
+  duck: "male" = "male";
+}
+
+const a = new Students();
+a.lee = "male";
+a.jade = "male";
+
+console.log(a);
+
+const b = new Students();
+b.chloe = "female";
+b.alex = "male";
+b.anna = "female";
+
+console.log(b);
+```
