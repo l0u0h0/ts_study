@@ -97,29 +97,43 @@
 
 // console.log(a === b);
 
-class Parent {
-  constructor(protected _name: string, private _age: number) {}
+// class Parent {
+//   constructor(protected _name: string, private _age: number) {}
 
-  public print(): void {
-    console.log(`이름: ${this._name}, 나이: ${this._age}`);
-  }
+//   public print(): void {
+//     console.log(`이름: ${this._name}, 나이: ${this._age}`);
+//   }
 
-  protected printName(): void {
-    console.log(this._name, this._age);
+//   protected printName(): void {
+//     console.log(this._name, this._age);
+//   }
+// }
+
+// const p = new Parent("Bare", 25);
+// p.print();
+
+// class Child extends Parent {
+//   public gender = "female";
+
+//   constructor(age: number) {
+//     super("DuckGyung Jr.", age);
+//     this.printName();
+//   }
+// }
+
+// const c = new Child(5);
+// c.print();
+
+abstract class AbstractPerson {
+  protected _name: string = "Yuhan";
+  abstract setName(name: string): void;
+}
+
+class Person extends AbstractPerson {
+  setName(name: string): void {
+    this._name = name;
   }
 }
 
-const p = new Parent("Bare", 25);
-p.print();
-
-class Child extends Parent {
-  public gender = "female";
-
-  constructor(age: number) {
-    super("DuckGyung Jr.", age);
-    this.printName();
-  }
-}
-
-const c = new Child(5);
-c.print();
+const p = new Person();
+p.setName("Duck");

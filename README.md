@@ -1993,3 +1993,25 @@ class Child extends Parent {
 const c = new Child(5);
 c.print();
 ```
+
+### Abstract Class
+
+- 추상클래스
+- 완전하지않은 클래스를 표현
+- 추상클래스는 상속을 통해 완전하게 구현해야 사용할 수 있다.
+
+```ts
+abstract class AbstractPerson {
+  protected _name: string = "Yuhan";
+  abstract setName(name: string): void;
+}
+
+class Person extends AbstractPerson {
+  setName(name: string): void {
+    this._name = name;
+  }
+}
+
+const p = new Person();
+p.setName("Duck");
+```
