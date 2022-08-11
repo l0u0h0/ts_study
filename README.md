@@ -2098,3 +2098,23 @@ helloTuple(["Hello", "World"]);
 // T, K => string, number 으로 각각 추론됨.
 helloTuple(["Hello", 2]);
 ```
+
+### Generics Function
+
+```ts
+// Type alias
+type HelloFunctionGeneric1 = <T>(message: T) => T;
+
+const helloFunction1: HelloFunctionGeneric1 = <T>(message: T): T => {
+  return message;
+};
+
+// interface
+interface HelloFunctionGeneric2 {
+  <T>(message: T): T;
+}
+
+const helloFunction2: HelloFunctionGeneric2 = <T>(message: T): T => {
+  return message;
+};
+```
